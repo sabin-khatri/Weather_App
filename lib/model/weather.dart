@@ -1,4 +1,3 @@
-
 class Weather {
   final String cityName;
   final double temperature;
@@ -9,6 +8,10 @@ class Weather {
   final double windSpeed;
   final int pressure;
   final int visibility;
+  final double lat;
+  final double lon;
+
+  // Sunrise/Sunset
   final DateTime sunrise;
   final DateTime sunset;
 
@@ -22,31 +25,27 @@ class Weather {
     required this.windSpeed,
     required this.pressure,
     required this.visibility,
+    required this.lat,
+    required this.lon,
     required this.sunrise,
     required this.sunset,
   });
 
   factory Weather.fromJson(Map<String, dynamic> json) {
     return Weather(
-      cityName: json['name'] ?? 'Unknown',
-      temperature: (json['main']['temp'] ?? 0).toDouble(),
-      feelsLike: (json['main']['feels_like'] ?? 0).toDouble(),
-      description: json['weather'][0]['description'] ?? 'No description',
-      icon: json['weather'][0]['icon'] ?? '01d',
-      humidity: json['main']['humidity'] ?? 0,
-      windSpeed: (json['wind']['speed'] ?? 0).toDouble(),
-      pressure: json['main']['pressure'] ?? 0,
-      visibility: json['visibility'] ?? 10000,
-      sunrise: DateTime.fromMillisecondsSinceEpoch(
-        (json['sys']['sunrise'] ?? 0) * 1000,
-      ),
-      sunset: DateTime.fromMillisecondsSinceEpoch(
-        (json['sys']['sunset'] ?? 0) * 1000,
-      ),
+      cityName: json['name'],
+      temperature: json['main']['temp'].toDouble(),
+      feelsLike: json['main']['feels_like'].toDouble(),
+      description: json['weather'][0]['description'],
+      icon: json['weather'][0]['icon'],
+      humidity: json['main']['humidity'],
+      windSpeed: json['wind']['speed'].toDouble(),
+      pressure: json['main']['pressure'],
+      visibility: json['visibility'],
+      lat: json['coord']['lat'].toDouble(),
+      lon: json['coord']['lon'].toDouble(),
+      sunrise: DateTime.fromMillisecondsSinceEpoch(json['sys']['sunrise'] * 1000),
+      sunset: DateTime.fromMillisecondsSinceEpoch(json['sys']['sunset'] * 1000),
     );
   }
-
-
-
-  String get iconUrl => 'https://openweathermap.org/img/wn/$icon@4x.png';
 }
