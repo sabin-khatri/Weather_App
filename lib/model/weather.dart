@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class Weather {
   final String cityName;
   final double temperature;
@@ -10,8 +12,6 @@ class Weather {
   final int visibility;
   final double lat;
   final double lon;
-
-  // Sunrise/Sunset
   final DateTime sunrise;
   final DateTime sunset;
 
@@ -44,8 +44,10 @@ class Weather {
       visibility: json['visibility'],
       lat: json['coord']['lat'].toDouble(),
       lon: json['coord']['lon'].toDouble(),
-      sunrise: DateTime.fromMillisecondsSinceEpoch(json['sys']['sunrise'] * 1000),
-      sunset: DateTime.fromMillisecondsSinceEpoch(json['sys']['sunset'] * 1000),
+      sunrise: DateTime.fromMillisecondsSinceEpoch(
+          json['sys']['sunrise'] * 1000),
+      sunset: DateTime.fromMillisecondsSinceEpoch(
+          json['sys']['sunset'] * 1000),
     );
   }
 }
