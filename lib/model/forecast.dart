@@ -1,4 +1,4 @@
-import 'dart:ui';
+import 'package:flutter/material.dart';
 
 class ForecastDay {
   final DateTime date;
@@ -21,7 +21,7 @@ class ForecastDay {
 }
 
 class AirQuality {
-  final int aqi; // 1=Good, 2=Fair, 3=Moderate, 4=Poor, 5=Very Poor
+  final int aqi;
   final double pm25;
   final double pm10;
   final double co;
