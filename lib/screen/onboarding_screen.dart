@@ -14,23 +14,29 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
 
-  final List<OnboardingPage> _pages = [
-    OnboardingPage(
-      lottieUrl: 'https://assets10.lottiefiles.com/packages/lf20_xlmz9xwm.json',
+  final List<_OnboardingPage> _pages = [
+    _OnboardingPage(
+      lottieUrl:
+          'https://assets10.lottiefiles.com/packages/lf20_xlmz9xwm.json',
       title: 'Real-Time Weather',
-      description: 'Get accurate, up-to-date weather information for any city around the world instantly.',
+      description:
+          'Get accurate, up-to-date weather information for any city around the world instantly.',
       gradient: [Color(0xFF1E3A8A), Color(0xFF3B82F6)],
     ),
-    OnboardingPage(
-      lottieUrl: 'https://assets10.lottiefiles.com/packages/lf20_bbsvqqq2.json',
+    _OnboardingPage(
+      lottieUrl:
+          'https://assets10.lottiefiles.com/packages/lf20_bbsvqqq2.json',
       title: '5-Day Forecast',
-      description: 'Plan your week ahead with detailed 5-day forecasts including temperature and conditions.',
+      description:
+          'Plan your week ahead with detailed 5-day forecasts including temperature and conditions.',
       gradient: [Color(0xFF1E2937), Color(0xFF334155)],
     ),
-    OnboardingPage(
-      lottieUrl: 'https://assets10.lottiefiles.com/packages/lf20_kd7kbf6m.json',
+    _OnboardingPage(
+      lottieUrl:
+          'https://assets10.lottiefiles.com/packages/lf20_kd7kbf6m.json',
       title: 'Your Location',
-      description: 'Automatically detect your location or search any city to get weather details instantly.',
+      description:
+          'Automatically detect your location or search any city to get weather details instantly.',
       gradient: [Color(0xFF1E1B4B), Color(0xFF4338CA)],
     ),
   ];
@@ -38,7 +44,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Future<void> _finishOnboarding() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('onboarding_done', true);
-
     if (!mounted) return;
     Navigator.pushReplacement(
       context,
@@ -51,25 +56,20 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          // Pages
           PageView.builder(
             controller: _pageController,
-            onPageChanged: (index) => setState(() => _currentPage = index),
+            onPageChanged: (index) =>
+                setState(() => _currentPage = index),
             itemCount: _pages.length,
-            itemBuilder: (context, index) {
-              final page = _pages[index];
-              return _buildPage(page);
-            },
+            itemBuilder: (context, index) =>
+                _buildPage(_pages[index]),
           ),
-
-          // Bottom Controls
           Positioned(
             bottom: 50,
             left: 24,
             right: 24,
             child: Column(
               children: [
-                // Dots
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: List.generate(
@@ -88,13 +88,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                   ),
                 ),
-
                 const SizedBox(height: 32),
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    // Skip Button
                     if (_currentPage < _pages.length - 1)
                       TextButton(
                         onPressed: _finishOnboarding,
@@ -108,8 +105,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       )
                     else
                       const SizedBox(width: 70),
-
-                    // Next / Get Started Button
                     GestureDetector(
                       onTap: () {
                         if (_currentPage < _pages.length - 1) {
@@ -159,7 +154,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-  Widget _buildPage(OnboardingPage page) {
+  Widget _buildPage(_OnboardingPage page) {
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -215,13 +210,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 }
 
-class OnboardingPage {
+class _OnboardingPage {
   final String lottieUrl;
   final String title;
   final String description;
   final List<Color> gradient;
 
-  OnboardingPage({
+  _OnboardingPage({
     required this.lottieUrl,
     required this.title,
     required this.description,
