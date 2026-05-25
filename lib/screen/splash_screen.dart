@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mmamc/screen/onboarding_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:mmamc/screen/onboarding_screen.dart';
 import 'package:mmamc/screen/weather_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -80,7 +80,6 @@ class _SplashScreenState extends State<SplashScreen>
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Lottie Animation
                   SizedBox(
                     height: 180,
                     width: 180,
