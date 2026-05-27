@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart';
 import 'package:mmamc/model/weather.dart';
 import 'package:mmamc/model/forecast.dart';
+import 'package:mmamc/model/hourly_forecast.dart';
 import 'package:mmamc/service/settings_service.dart';
 
 class WeatherService {
@@ -76,6 +77,28 @@ class WeatherService {
         icon: midItem['weather'][0]['icon'],
         humidity: midItem['main']['humidity'],
         windSpeed: midItem['wind']['speed'].toDouble(),
+      );
+    }).toList();
+  }
+
+  static Future<List<HourlyForecast>> getHourlyForecast(
+      double lat, double lon) async {
+    final unit = await SettingsService.getUnit();
+    final url = Uri.parse(
+        '$_baseUrl/forecast?lat=$lat&lon=$lon&appid=$_apiKey&units=$unit');
+    final response = await http.get(url);
+
+    if (response.statusCode != 200) return [];
+
+    final data = jsonDecode(response.body);
+    final List items = data['list'];
+
+    return items.take(8).map<HourlyForecast>((item) {
+      return HourlyForecast(
+        time: DateTime.fromMillisecondsSinceEpoch(item['dt'] * 1000),
+        temp: item['main']['temp'].toDouble(),
+        description: item['weather'][0]['description'] as String,
+        icon: item['weather'][0]['icon'] as String,
       );
     }).toList();
   }
